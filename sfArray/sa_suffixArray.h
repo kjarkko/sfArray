@@ -12,10 +12,10 @@
 extern "C" {
 #endif
 
-    typedef struct suffixarray_st sa_sufArr;
+    typedef struct sfarr sa_suf_arr;
 
-    sa_sufArr *sa_new(const char *src);
-    void sa_free(sa_sufArr *sa);
+    sa_suf_arr *sa_construct(const char *src);
+    void sa_free(sa_suf_arr *sa);
 
 #ifdef	__cplusplus
 }
