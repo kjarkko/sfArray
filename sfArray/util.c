@@ -7,13 +7,13 @@ typedef struct {
     char **arr;
     unsigned int size;
     unsigned int length;
-} vec_st;
+} str_arr_st;
 
 
 /* Allocates a new vector.
  */
 str_arr *str_arr_new(){
-    vec_st *new = malloc(sizeof(vec_st));
+    str_arr_st *new = malloc(sizeof(str_arr_st));
     
     new->arr = malloc(8 * sizeof(char *));
     new->size = 0;
@@ -25,7 +25,7 @@ str_arr *str_arr_new(){
 /* 
  */
 void str_arr_free(str_arr *vector){
-    vec_st *vect = (vec_st *)vector;
+    str_arr_st *vect = (str_arr_st *)vector;
     unsigned int size = vect->size;
     while(size > 0){
         size--;
@@ -36,11 +36,11 @@ void str_arr_free(str_arr *vector){
 }
 
 unsigned int str_arr_size(str_arr *vector){
-    return ((vec_st *)vector)->size;
+    return ((str_arr_st *)vector)->size;
 }
     
 char **get_array(str_arr *vector){
-    vec_st *vect = (vec_st *)vector;
+    str_arr_st *vect = (str_arr_st *)vector;
     char **arr = malloc(vect->size * sizeof(char *));
     
     unsigned int i = 0;
@@ -54,7 +54,7 @@ char **get_array(str_arr *vector){
 /* Adds a member to the array, increasing the size if needed.
  */
 int str_arr_add(str_arr *vector, char *str){
-    vec_st *vect = (vec_st *)vector;
+    str_arr_st *vect = (str_arr_st *)vector;
     
     if(vect->length == vect->size){
         int success = inc_len(vect);
@@ -80,7 +80,7 @@ int str_arr_contains(str_arr *vector, char *str){
 
 /* Doubles the length of the array and updates the 'length' variable
  */
-int inc_len(vec_st vect){
+int inc_len(str_arr_st vect){
     unsigned int newlen = vect.length << 2;
     vect.length = newlen;
     vect.arr = realloc(vect.arr, newlen);
