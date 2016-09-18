@@ -14,7 +14,7 @@ extern "C" {
 
     typedef struct sfarr sa_suf_arr;
 
-    sa_suf_arr *sa_construct(const char *src);
+    sa_suf_arr *sa_new(const char *src);
     void sa_free(sa_suf_arr *sa);
 
 #ifdef	__cplusplus

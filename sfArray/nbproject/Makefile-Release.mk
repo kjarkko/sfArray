@@ -36,7 +36,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/sa_stringutils.o \
-	${OBJECTDIR}/sa_suffixArray.o
+	${OBJECTDIR}/sa_suffixArray.o \
+	${OBJECTDIR}/util.o
 
 
 # C Compiler Flags
@@ -74,6 +75,11 @@ ${OBJECTDIR}/sa_suffixArray.o: sa_suffixArray.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sa_suffixArray.o sa_suffixArray.c
+
+${OBJECTDIR}/util.o: util.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/util.o util.c
 
 # Subprojects
 .build-subprojects:
