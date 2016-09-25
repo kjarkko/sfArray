@@ -39,6 +39,14 @@ OBJECTFILES= \
 	${OBJECTDIR}/sa_suffixArray.o \
 	${OBJECTDIR}/util.o
 
+# Test Directory
+TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
+
+# Test Files
+TESTFILES= \
+	${TESTDIR}/TestFiles/f3 \
+	${TESTDIR}/TestFiles/f1 \
+	${TESTDIR}/TestFiles/f2
 
 # C Compiler Flags
 CFLAGS=
@@ -69,20 +77,103 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libsfarray.a: ${OBJECTFILES}
 ${OBJECTDIR}/sa_stringutils.o: sa_stringutils.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sa_stringutils.o sa_stringutils.c
+	$(COMPILE.c) -g -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sa_stringutils.o sa_stringutils.c
 
 ${OBJECTDIR}/sa_suffixArray.o: sa_suffixArray.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sa_suffixArray.o sa_suffixArray.c
+	$(COMPILE.c) -g -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sa_suffixArray.o sa_suffixArray.c
 
 ${OBJECTDIR}/util.o: util.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/util.o util.c
+	$(COMPILE.c) -g -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/util.o util.c
 
 # Subprojects
 .build-subprojects:
+
+# Build Test Targets
+.build-tests-conf: .build-conf ${TESTFILES}
+${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/check_sa_stringutils.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.c}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} 
+
+${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/check_sa_suffixArray.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.c}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} 
+
+${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/check_util.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.c}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} 
+
+
+${TESTDIR}/tests/check_sa_stringutils.o: tests/check_sa_stringutils.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -g -I. -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/check_sa_stringutils.o tests/check_sa_stringutils.c
+
+
+${TESTDIR}/tests/check_sa_suffixArray.o: tests/check_sa_suffixArray.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -g -I. -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/check_sa_suffixArray.o tests/check_sa_suffixArray.c
+
+
+${TESTDIR}/tests/check_util.o: tests/check_util.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -g -I. -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/check_util.o tests/check_util.c
+
+
+${OBJECTDIR}/sa_stringutils_nomain.o: ${OBJECTDIR}/sa_stringutils.o sa_stringutils.c 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/sa_stringutils.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -g -I. -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sa_stringutils_nomain.o sa_stringutils.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/sa_stringutils.o ${OBJECTDIR}/sa_stringutils_nomain.o;\
+	fi
+
+${OBJECTDIR}/sa_suffixArray_nomain.o: ${OBJECTDIR}/sa_suffixArray.o sa_suffixArray.c 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/sa_suffixArray.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -g -I. -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/sa_suffixArray_nomain.o sa_suffixArray.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/sa_suffixArray.o ${OBJECTDIR}/sa_suffixArray_nomain.o;\
+	fi
+
+${OBJECTDIR}/util_nomain.o: ${OBJECTDIR}/util.o util.c 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/util.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -g -I. -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/util_nomain.o util.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/util.o ${OBJECTDIR}/util_nomain.o;\
+	fi
+
+# Run Test Targets
+.test-conf:
+	@if [ "${TEST}" = "" ]; \
+	then  \
+	    ${TESTDIR}/TestFiles/f3 || true; \
+	    ${TESTDIR}/TestFiles/f1 || true; \
+	    ${TESTDIR}/TestFiles/f2 || true; \
+	else  \
+	    ./${TEST} || true; \
+	fi
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}

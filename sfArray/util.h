@@ -17,11 +17,10 @@ extern "C" {
     str_arr *str_arr_new();
     void str_arr_free(str_arr *vector);
     
-    unsigned int str_arr_size(str_arr *arr);
+    inline unsigned int str_arr_size(str_arr *arr);
     char **get_array(str_arr *arr);
-    void *str_arr_get(str_arr *arr, unsigned int index);
-    unsigned int str_arr_find(str_arr *arr, char *str);
-    int str_arr_contains(str_arr *arr, char *str);
+    inline char *str_arr_get(str_arr *arr, unsigned int index);
+    int str_arr_find(str_arr *arr, char *str);
     int str_arr_add(str_arr *arr, char *str);
 
 
