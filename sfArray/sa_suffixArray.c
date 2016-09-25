@@ -66,7 +66,7 @@ int *create_lcpA(char **suffixes, unsigned int len)
     return lcpa;
 }
 
-/*
+/* locate the string in the given sorted array using binary search
  */
 int locate(char **suffixes, const char *str)
 {
@@ -90,11 +90,12 @@ int locate(char **suffixes, const char *str)
     return -1;
 }
 
-
+/* free the structure.
+ */
 void sa_free(sa_suf_arr *sa) 
 {
     unsigned int i = 0;
-    while(((sfarr *) sa)->suffixes[i] != NULL){
+    while(((sfarr *) sa)->suffixes[i] != NULL){ // not needed?
         free(((sfarr *) sa)->suffixes[i]);
         i++;
     }

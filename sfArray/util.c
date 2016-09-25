@@ -3,7 +3,8 @@
 #include <string.h>
 #include "util.h"
 
-
+/* sorts the given string array using MSD radix sort
+ */
 void radix_sort(char **strings, unsigned int len)
 {
     
@@ -32,7 +33,7 @@ str_arr *str_arr_new()
     return (str_arr *)new;
 }
 
-/* 
+/* free the given vector, strings are not freed
  */
 void str_arr_free(str_arr *vector)
 {
@@ -48,6 +49,8 @@ void str_arr_free(str_arr *vector)
     free(vect);
 }
 
+/* returns the amount of members in the given vector
+ */
 inline unsigned int str_arr_size(str_arr *vector)
 {
     return ((str_arr_st *)vector)->size;
@@ -71,7 +74,7 @@ char **get_array(str_arr *vector)
     return arr;
 }
     
-/* Adds a member to the array, increasing the size if needed.
+/* Adds a member to the vector, increasing the size if needed.
  */
 int str_arr_add(str_arr *vector, char *str)
 {
@@ -109,7 +112,7 @@ int str_arr_find(str_arr *vector, char *str)
     return -1;
 }
 
-/* Doubles the length of the array and updates the 'length' variable
+/* Doubles the length of the vector and updates the 'length' variable
  */
 int inc_len(str_arr_st vect)
 {
