@@ -3,12 +3,32 @@
 #include <string.h>
 #include "util.h"
 
+#define swap(s1ptr, s2ptr) {char *tmp = s1ptr; s1ptr = s2ptr; s2ptr = tmp;};
+
+void radix_sort_subarray(
+        char **strings, char **aux,
+        unsigned int l, unsigned int r, // left, right
+        unsigned int n) // index of char
+{
+    int count[256];
+    int i = l;
+    while(i < r){
+        
+    }
+    
+    //char *aux[r-l];
+    
+}
+
 /* sorts the given string array using MSD radix sort
  */
 void radix_sort(char **strings, unsigned int len)
 {
-    
+    char *aux[len];
+    memset(aux, 0, len);
+    radix_sort_subarray(strings, aux, 0, len, 0);
 }
+
 
 
 /*---vector---*/
@@ -38,13 +58,6 @@ str_arr *str_arr_new()
 void str_arr_free(str_arr *vector)
 {
     str_arr_st *vect = (str_arr_st *)vector;
-    unsigned int i = 0;
-/*
-    while(i < vect->size){
-        free(vect->arr[vect->size]);
-        i++;
-    }
-*/
     free(vect->arr);
     free(vect);
 }
@@ -73,6 +86,17 @@ char **get_array(str_arr *vector)
     
     return arr;
 }
+
+
+/* Doubles the length of the vector and updates the 'length' variable
+ */
+int inc_len(str_arr_st *vect)
+{
+    unsigned int newlen = vect->length << 1;
+    vect->length = newlen;
+    vect->arr = realloc(vect->arr, newlen);
+    return vect->arr != NULL ? EXIT_SUCCESS : EXIT_FAILURE;
+}
     
 /* Adds a member to the vector, increasing the size if needed.
  */
@@ -80,16 +104,15 @@ int str_arr_add(str_arr *vector, char *str)
 {
     str_arr_st *vect = (str_arr_st *)vector;
     
-    if(vect->length == vect->size){
-        int success = inc_len(vect);
-        if(!success)
-            return 0;
-    }
+    // increase the length of the vector if needed, return EXIT_FAILURE if unsuccessful
+    if(vect->length == vect->size)
+        if(inc_len(vect) == EXIT_FAILURE)
+            return EXIT_FAILURE;
     
     vect->arr[vect->size] = str;
     vect->size++;
     
-    return 1;
+    return EXIT_SUCCESS;
 }
 
 /* return the pointer to the string stored in index i
@@ -112,12 +135,3 @@ int str_arr_find(str_arr *vector, char *str)
     return -1;
 }
 
-/* Doubles the length of the vector and updates the 'length' variable
- */
-int inc_len(str_arr_st vect)
-{
-    unsigned int newlen = vect.length << 1;
-    vect.length = newlen;
-    vect.arr = realloc(vect.arr, newlen);
-    return vect.arr != NULL;
-}

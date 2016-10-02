@@ -12,31 +12,6 @@ typedef struct {
 } sfarr;
 
 
-/* creates a new suffix array based on the string src
- */
-sa_suf_arr *sa_new(const char *src) 
-{
-    sfarr *new = malloc(sizeof (sfarr));
-
-    new->src_str = strdup(src);
-    str_arr *substrings = str_arr_new();
-    unsigned int len = strlen(src);
-    unsigned int i = 0;
-    while(i < len){
-        str_arr_add(substrings, &new->src_str[len]);
-        i++;
-    }
-    
-    char **arr = get_array(substrings);
-    
-    qsort(arr, str_arr_size(substrings), sizeof(char *), (__compar_fn_t)strcmp);
-    
-    new->suffixes = arr;
-    new->nsuffix = len; // off by one? 
-
-    return (sa_suf_arr *) new;
-}
-
 /* length of the longest prefix that occurs in both strings
  */
 unsigned int longest_equ_prefix_len(const char *str1, const char *str2)
@@ -66,13 +41,45 @@ int *create_lcpA(char **suffixes, unsigned int len)
     return lcpa;
 }
 
-/* locate the string in the given sorted array using binary search
+/* creates a new suffix array based on the string src
  */
-int locate(char **suffixes, const char *str)
+sa_suf_arr *sa_new(const char *src) 
+{
+    sfarr *new = malloc(sizeof (sfarr));
+
+    new->src_str = strdup(src);
+    
+    // create a vector containing all the suffixes
+    str_arr *substrings = str_arr_new();
+    unsigned int len = strlen(src);
+    unsigned int i = 0;
+    while(i < len){
+        str_arr_add(substrings, &new->src_str[len]);
+        i++;
+    }
+    
+    // sort the suffixes
+    char **arr = get_array(substrings);
+    qsort(arr, str_arr_size(substrings), sizeof(char *), (__compar_fn_t)strcmp);
+    
+    new->lcp = create_lcpA(arr, len);
+    new->suffixes = arr;
+    new->nsuffix = len; // off by one? 
+
+    str_arr_free(substrings);
+    return (sa_suf_arr *) new;
+}
+
+
+
+/* locate the string in the given sorted array using binary search
+ * return: index of the string, -1 if not found
+ */
+int locate(char **suffixes, size_t nsuffix, const char *str)
 {
     unsigned int len = strlen(str);
     int min = 0;
-    int max = 0;
+    int max = nsuffix;
     int mid;
     
     while(min <= max){
@@ -99,6 +106,7 @@ void sa_free(sa_suf_arr *sa)
         free(((sfarr *) sa)->suffixes[i]);
         i++;
     }
+    free(((sfarr *) sa)->lcp);
     free(((sfarr *) sa)->suffixes);
     free(((sfarr *) sa)->src_str);
     free(sa);

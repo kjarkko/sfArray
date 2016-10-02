@@ -7,6 +7,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#include "sa_suffixArray.h"
 
 static int failures;
 
@@ -22,27 +25,88 @@ static int failures;
 void sa_strlen_test()
 {
     BEGIN ("sa_strlen_test")
+            
+    char *str;
+    int cmp;
     
-    END(EXIT_FAILURE)
+    str = "";
+    cmp = strlen(str) == sa_strlen(str);
+    if(!cmp)
+        END(EXIT_FAILURE)
+        
+    str = "a";
+    cmp = strlen(str) == sa_strlen(str);
+    if(!cmp)
+        END(EXIT_FAILURE)
+        
+    str = "asdasdasd";
+    cmp = strlen(str) == sa_strlen(str);
+    if(!cmp)
+        END(EXIT_FAILURE)
+    
+    END(EXIT_SUCCESS)
 }
 
 void sa_strcmp_test()
 {
     BEGIN("sa_strcmp_test")
     
-    END (EXIT_FAILURE)
+    char *s1, *s2;
+    int ret;
+    
+    s1 = "";
+    s2 = "";
+    ret = sa_strcmp(s1,s2) == strcmp(s1,s2);
+    if(!ret)
+        END(EXIT_FAILURE)
+        
+    s1 = "a";
+    s2 = "";
+    ret = sa_strcmp(s1,s2) == strcmp(s1,s2);
+    if(!ret)
+        END(EXIT_FAILURE)
+        
+    s1 = "a";
+    s2 = "a";
+    ret = sa_strcmp(s1,s2) == strcmp(s1,s2);
+    if(!ret)
+        END(EXIT_FAILURE)
+    
+    END (EXIT_SUCCESS)
 }
 
 void sa_contains_test()
 {
     BEGIN ("sa_contains_test")
     
-    END(EXIT_FAILURE)
+    printf("\t\ttest not implemented yet.\n");
+    
+    END(EXIT_SUCCESS)
 }
 
 void sa_locate_test()
 {
     BEGIN ("sa_locate_test")
+    
+    printf("\t\ttest not implemented yet.\n");
+    
+    END (EXIT_FAILURE)
+}
+
+void sa_longest_recurring_test()
+{
+    BEGIN ("sa_longest_recurring_test")
+    
+    printf("\t\ttest not implemented yet.\n");
+    
+    END (EXIT_FAILURE)
+}
+
+void sa_count_occurrences_test()
+{
+    BEGIN ("sa_longest_recurring_test")
+    
+    printf("\t\ttest not implemented yet.\n");
     
     END (EXIT_FAILURE)
 }
@@ -51,6 +115,8 @@ void sa_longest_common_test()
 {
     BEGIN ("sa_longest_common_test")
     
+    printf("\t\ttest not implemented yet.\n");
+    
     END (EXIT_FAILURE)
 }
 
@@ -58,12 +124,16 @@ void sa_longest_repeated_test()
 {
     BEGIN ("sa_longest_repeated_test")
     
+    printf("\t\ttest not implemented yet.\n");
+    
     END(EXIT_FAILURE)
 }
 
 void sa_longest_palindrome_test()
 {
     BEGIN ("sa_longest_palindrome_test")
+    
+    printf("\t\ttest not implemented yet.\n");
     
     END (EXIT_FAILURE)
 }

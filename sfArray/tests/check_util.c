@@ -28,6 +28,8 @@ void radix_sort_test()
 {
     BEGIN ("radix_sort_test")
     
+    printf("\t\ttest not implemented yet.\n");
+    
     END(EXIT_FAILURE)
 }
 
@@ -40,7 +42,7 @@ void str_arr_new_and_free_test()
     
     
     str_arr_free(sa);
-    END(EXIT_FAILURE)
+    END(EXIT_SUCCESS)
 }
 
 void get_array_test()
@@ -150,6 +152,8 @@ void str_arr_find_test()
     str_arr *sa = str_arr_new();
     
     
+    printf("\t\ttest not implemented yet.\n");
+    
     str_arr_free(sa);
     END(EXIT_FAILURE)
 }
@@ -159,6 +163,8 @@ void inc_len_test()
     BEGIN ("inc_len_test")
     str_arr *sa = str_arr_new();
     
+    
+    printf("\t\ttest not implemented yet.\n");
     
     str_arr_free(sa);
     END(EXIT_FAILURE)

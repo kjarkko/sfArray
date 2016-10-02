@@ -24,8 +24,11 @@ static int failures;
 void new_and_free_test()
 {
     BEGIN ("new_and_free_test")
-    
-    END (EXIT_FAILURE)
+    printf("\t\thow do i valgrind\n");
+    int a = 0;
+    while(a++ < 1000)
+        sa_free(sa_new(""));
+    END (EXIT_SUCCESS)
 }
 
 void longest_equ_prefix_len_test()
@@ -105,7 +108,19 @@ void locate_test()
 {
     BEGIN ("locate_test")
     
-    END (EXIT_FAILURE)
+    char *a[] = {
+        "",
+        "a",
+        "aa",
+        "aaa",
+        NULL
+    };
+    int ret = locate(a,4, "aa");
+    
+    if(ret == 2)
+        END (EXIT_SUCCESS)
+    else
+        END (EXIT_FAILURE)
 }
 
 
