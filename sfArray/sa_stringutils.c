@@ -38,18 +38,20 @@ int sa_contains(sa_suf_arr *sa, const char *str)
 }
 
 /* returns the index of the given string, -1 if not found
+ * 
+ * O(l log n) 
  */
-int sa_locate(sa_suf_arr *sa, const char *str)
+int sa_locate(sa_suf_arr *sa, const char *find)
 {
     sfarr *s = (sfarr *)sa;
-    unsigned int len = strlen(str);
+    unsigned int len = strlen(find);
     int min = 0;
-    int max = s->nsuffix;
+    int max = s->nsuffix-1;
     int mid;
     
     while(min <= max){
         mid = (min + max) >> 1;
-        int cmp = strncmp(s->suffixes[mid], str, len);
+        int cmp = strncmp(s->suffixes[mid], find, len);
         if(cmp == 0)
             return mid;
         else if(cmp > 0){

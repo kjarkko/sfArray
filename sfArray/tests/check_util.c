@@ -27,10 +27,54 @@ static int failures;
 void radix_sort_test()
 {
     BEGIN ("radix_sort_test")
+            
+    int failed = 0;
+            
+    char *str1[5] = {
+        "abcd",
+        "bcd",
+        "cd",
+        "d",
+        ""
+    };
     
-    printf("\t\ttest not implemented yet.\n");
+    radix_sort(str1, 5);
     
-    END(EXIT_FAILURE)
+    if(strcmp(str1[0], "") != 0){
+        failed = 1;
+    }if(strcmp(str1[1], "abcd") != 0){
+        failed = 1;
+    }if(strcmp(str1[2], "bcd") != 0){
+        failed = 1;
+    }if(strcmp(str1[3], "cd") != 0){
+        failed = 1;
+    }if(strcmp(str1[4], "d") != 0){
+        failed = 1;
+    }
+    
+    char *str2[5] = {
+        "aaaa",
+        "aaa",
+        "aa",
+        "a",
+        ""
+    };   
+    
+    radix_sort(str2, 5);
+    
+    if(strcmp(str2[0], "") != 0){
+        failed = 1;
+    }if(strcmp(str2[1], "a") != 0){
+        failed = 1;
+    }if(strcmp(str2[2], "aa") != 0){
+        failed = 1;
+    }if(strcmp(str2[3], "aaa") != 0){
+        failed = 1;
+    }if(strcmp(str2[4], "aaaa") != 0){
+        failed = 1;
+    }
+    
+    END(failed ? EXIT_FAILURE : EXIT_SUCCESS)
 }
 
 /* tries to check for memory leaks, I suppose.

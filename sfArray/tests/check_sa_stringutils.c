@@ -10,6 +10,7 @@
 #include <string.h>
 
 #include "sa_suffixArray.h"
+#include "sa_stringutils.h"
 
 static int failures;
 
@@ -79,9 +80,47 @@ void sa_contains_test()
 {
     BEGIN ("sa_contains_test")
     
-    printf("\t\ttest not implemented yet.\n");
+    sa_suf_arr *s1 = sa_new("abba");
+    sa_suf_arr *s2 = sa_new("baab");
+    sa_suf_arr *s3 = sa_new("abab");
+    
+    char *str1 = "aa";
+    char *str2 = "bb";
+    char *str3 = "ab";
+    
+    int f = 0;
+    
+    if( sa_contains(s1, str1))
+        f++;
+    if(!sa_contains(s1, str2))
+        f++;
+    if(!sa_contains(s1, str3))
+        f++;
+    if(!sa_contains(s2, str1))
+        f++;
+    if( sa_contains(s2, str2))
+        f++;
+    if(!sa_contains(s2, str3))
+        f++;
+    if( sa_contains(s3, str1))
+        f++;
+    if( sa_contains(s3, str2))
+        f++;
+    if(!sa_contains(s3, str3))
+        f++;
+    
+    printf("\t\t%d\n", f);
+    
+    if(f)
+        goto fail;
+    
+    sa_free(s1);
+    sa_free(s2);
+    sa_free(s3);
     
     END(EXIT_SUCCESS)
+    
+    fail:END(EXIT_FAILURE);
 }
 
 void sa_locate_test()

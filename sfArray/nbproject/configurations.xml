@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>def.h</itemPath>
       <itemPath>sa_stringutils.h</itemPath>
       <itemPath>sa_suffixArray.h</itemPath>
       <itemPath>util.h</itemPath>
@@ -71,6 +72,8 @@
         <archiverTool>
         </archiverTool>
       </compileType>
+      <item path="def.h" ex="false" tool="3" flavor2="0">
+      </item>
       <folder path="TestFiles/f1">
         <cTool>
           <incDir>
@@ -163,6 +166,8 @@
         <archiverTool>
         </archiverTool>
       </compileType>
+      <item path="def.h" ex="false" tool="3" flavor2="0">
+      </item>
       <folder path="TestFiles/f1">
         <cTool>
           <incDir>

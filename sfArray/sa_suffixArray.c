@@ -13,10 +13,12 @@ typedef struct {
 
 
 /* length of the longest prefix that occurs in both strings
+ * 
+ * O(n)
  */
-unsigned int longest_equ_prefix_len(const char *str1, const char *str2)
+inline unsigned int longest_equ_prefix_len(const char *str1, const char *str2)
 {
-    unsigned int i = 0;
+    register unsigned int i = 0;
     while(  str1[i] != '\0' && 
             str2[i] != '\0' && 
             str1[i] == str2[i])
@@ -26,6 +28,8 @@ unsigned int longest_equ_prefix_len(const char *str1, const char *str2)
 }
 
 /* creates the longest common prefix array
+ * 
+ * O(n*l)
  */
 int *create_lcpA(char **suffixes, unsigned int len)
 {
@@ -42,6 +46,8 @@ int *create_lcpA(char **suffixes, unsigned int len)
 }
 
 /* creates a new suffix array based on the string src
+ * 
+ * O(l^2), where l is the length of the str
  */
 sa_suf_arr *sa_new(const char *src) 
 {
@@ -60,11 +66,11 @@ sa_suf_arr *sa_new(const char *src)
     
     // sort the suffixes
     char **arr = get_array(substrings);
-    qsort(arr, str_arr_size(substrings), sizeof(char *), (__compar_fn_t)strcmp);
+    radix_sort(arr, str_arr_size(substrings));
     
     new->lcp = create_lcpA(arr, len);
     new->suffixes = arr;
-    new->nsuffix = len; // off by one? 
+    new->nsuffix = len+1; // off by one? 
 
     str_arr_free(substrings);
     return (sa_suf_arr *) new;
@@ -74,17 +80,19 @@ sa_suf_arr *sa_new(const char *src)
 
 /* locate the string in the given sorted array using binary search
  * return: index of the string, -1 if not found
+ * 
+ * O(l log n), l = length of find, n = nsuffix 
  */
-int locate(char **suffixes, size_t nsuffix, const char *str)
+int locate(char **suffixes, size_t nsuffix, const char *find)
 {
-    unsigned int len = strlen(str);
+    unsigned int len = strlen(find);
     int min = 0;
     int max = nsuffix;
     int mid;
     
     while(min <= max){
         mid = (min + max) >> 1;
-        int cmp = strncmp(suffixes[mid], str, len);
+        int cmp = strncmp(suffixes[mid], find, len);
         if(cmp == 0)
             return mid;
         else if(cmp > 0){
@@ -98,14 +106,11 @@ int locate(char **suffixes, size_t nsuffix, const char *str)
 }
 
 /* free the structure.
+ * 
+ * O(n)
  */
 void sa_free(sa_suf_arr *sa) 
 {
-    unsigned int i = 0;
-    while(((sfarr *) sa)->suffixes[i] != NULL){ // not needed?
-        free(((sfarr *) sa)->suffixes[i]);
-        i++;
-    }
     free(((sfarr *) sa)->lcp);
     free(((sfarr *) sa)->suffixes);
     free(((sfarr *) sa)->src_str);

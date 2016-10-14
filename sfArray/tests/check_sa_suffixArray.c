@@ -21,6 +21,13 @@ static int failures;
         printf("\tTEST FAILED\n\n");\
         failures++;return;}
 
+typedef struct {
+    char *src_str;
+    int *lcp;
+    char **suffixes;
+    unsigned int nsuffix;
+} sfa;
+
 void new_and_free_test()
 {
     BEGIN ("new_and_free_test")
@@ -28,6 +35,14 @@ void new_and_free_test()
     int a = 0;
     while(a++ < 1000)
         sa_free(sa_new(""));
+    
+    sfa *s = (sfa *)sa_new("dcba");
+    
+    unsigned int i;
+    for(i = 0; i < s->nsuffix; i++)
+        printf("\t\t%s\n", s->suffixes[i]);
+    
+    sa_free((sa_suf_arr *)s);
     END (EXIT_SUCCESS)
 }
 

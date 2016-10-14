@@ -1,34 +1,78 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
+#include <unistd.h>
 #include "util.h"
 
-#define swap(s1ptr, s2ptr) {char *tmp = s1ptr; s1ptr = s2ptr; s2ptr = tmp;};
+typedef unsigned int u32;
 
-void radix_sort_subarray(
-        char **strings, char **aux,
-        unsigned int l, unsigned int r, // left, right
-        unsigned int n) // index of char
+/* return: how many strings added to sort_to
+ */
+char **rdxsrt(
+        char **unsorted, u32 len,
+        char **sort_to, u32 char_index)
 {
-    int count[256];
-    int i = l;
-    while(i < r){
-        
+    char *sorted[len];
+    u32 char_count[128] = {0}; // number of times ascii char c occurs in the strings
+    u32 sumtbl[128]; // start index of strings, sum table of char_count
+    u32 index[128]; // copy of sumtbl that is incremented
+    u32 i;
+    
+    // create char_count
+    for(i = 0; i < len; i++){
+        char *str = unsorted[i];
+        char c = str[char_index];
+        char_count[c]++;
     }
     
-    //char *aux[r-l];
+    // create sumtbl
+    sumtbl[0] = 0;
+    index[0] = 0;
+    for(i = 1; i < 128; i++){
+        u32 val = sumtbl[i-1] + char_count[i-1];
+        sumtbl[i] = val;
+        index[i] = val;
+    }
     
+    // fill sorted
+    for(i = 0; i < len; i++){ 
+        char *str = unsorted[i];
+        char c = str[char_index];
+
+        if(c == '\0'){
+            sort_to[0] = str;
+            sort_to += sizeof(char *); 
+        }else{
+            u32 strindex = index[c];
+            sorted[strindex] = str;
+            index[c]++;
+        }
+    }
+    
+    // sort the sorted based on the next index
+    char_index++;
+    for(i = 1; i < 128; i++){
+        if(char_count[i] == 0)
+            continue;
+        
+        sort_to = rdxsrt(   &sorted[sumtbl[i]], char_count[i],
+                            sort_to, char_index);
+    }
+    
+    return sort_to;
 }
 
-/* sorts the given string array using MSD radix sort
+/* sort the string array based on MSD radix sort
+ * 
+ * O(n*l), l is the length of the longest string
  */
 void radix_sort(char **strings, unsigned int len)
 {
-    char *aux[len];
-    memset(aux, 0, len);
-    radix_sort_subarray(strings, aux, 0, len, 0);
+    char *sorted[len];
+    rdxsrt(strings, len, sorted, 0);
+    memcpy(strings, sorted, len);
 }
-
 
 
 /*---vector---*/
@@ -41,6 +85,8 @@ typedef struct {
 
 
 /* Allocates a new vector.
+ * 
+ * O(1)
  */
 str_arr *str_arr_new()
 {
@@ -54,6 +100,8 @@ str_arr *str_arr_new()
 }
 
 /* free the given vector, strings are not freed
+ * 
+ * O(1)
  */
 void str_arr_free(str_arr *vector)
 {
@@ -63,6 +111,8 @@ void str_arr_free(str_arr *vector)
 }
 
 /* returns the amount of members in the given vector
+ * 
+ * O(1)
  */
 inline unsigned int str_arr_size(str_arr *vector)
 {
@@ -71,6 +121,8 @@ inline unsigned int str_arr_size(str_arr *vector)
     
 /* returns a pointer to a dynamically allocated string array
  * the array is null terminated
+ * 
+ * O(n)
  */
 char **get_array(str_arr *vector)
 {
@@ -99,6 +151,8 @@ int inc_len(str_arr_st *vect)
 }
     
 /* Adds a member to the vector, increasing the size if needed.
+ * 
+ * O(1) most of the time, O(n) if the length is increased
  */
 int str_arr_add(str_arr *vector, char *str)
 {
@@ -116,6 +170,8 @@ int str_arr_add(str_arr *vector, char *str)
 }
 
 /* return the pointer to the string stored in index i
+ * 
+ * O(1)
  */
 inline char *str_arr_get(str_arr *vector, unsigned int index)
 {
@@ -123,6 +179,7 @@ inline char *str_arr_get(str_arr *vector, unsigned int index)
 }
 
 /* find the index of the given member, -1 if not contained in the array
+ * O(n*l)
  */
 int str_arr_find(str_arr *vector, char *str)
 {
