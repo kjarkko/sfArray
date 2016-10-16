@@ -3,13 +3,7 @@
 #include <string.h>
 #include "sa_suffixArray.h"
 #include "sa_stringutils.h"
-
-typedef struct {
-    char *src_str;
-    int *lcp;
-    char **suffixes;
-    unsigned int nsuffix;
-} sfarr;
+#include "def.h"
 
 /* returns the length of the given string
  */
@@ -54,7 +48,7 @@ int sa_locate(sa_suf_arr *sa, const char *find)
         int cmp = strncmp(s->suffixes[mid], find, len);
         if(cmp == 0)
             return mid;
-        else if(cmp > 0){
+        else if(cmp < 0){
             min = mid + 1;
         }else{
             max = mid - 1;

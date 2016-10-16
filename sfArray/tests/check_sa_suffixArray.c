@@ -9,6 +9,7 @@
 #include <stdlib.h>
 
 #include "sa_suffixArray.h"
+#include "def.h"
 
 static int failures;
 
@@ -21,12 +22,6 @@ static int failures;
         printf("\tTEST FAILED\n\n");\
         failures++;return;}
 
-typedef struct {
-    char *src_str;
-    int *lcp;
-    char **suffixes;
-    unsigned int nsuffix;
-} sfa;
 
 void new_and_free_test()
 {
@@ -36,7 +31,7 @@ void new_and_free_test()
     while(a++ < 1000)
         sa_free(sa_new(""));
     
-    sfa *s = (sfa *)sa_new("dcba");
+    sfarr *s = (sfarr *)sa_new("dcba");
     
     unsigned int i;
     for(i = 0; i < s->nsuffix; i++)
@@ -126,13 +121,13 @@ void locate_test()
     char *a[] = {
         "",
         "a",
-        "aa",
-        "aaa",
-        NULL
+        "abba",
+        "ba",
+        "bba"
     };
-    int ret = locate(a,4, "aa");
-    
-    if(ret == 2)
+    int ret = locate(a,5, "bb");
+    printf("\t\t%d\n",ret);
+    if(ret == 4)
         END (EXIT_SUCCESS)
     else
         END (EXIT_FAILURE)

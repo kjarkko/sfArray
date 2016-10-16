@@ -90,33 +90,52 @@ void sa_contains_test()
     
     int f = 0;
     
-    if( sa_contains(s1, str1))
+    if( sa_contains(s1, str1)){
         f++;
-    if(!sa_contains(s1, str2))
+        printf("\t\t%d %s\n", 1,str1);
+    }
+    if(!sa_contains(s1, str2)){
         f++;
-    if(!sa_contains(s1, str3))
+        printf("\t\t%d %s\n", 1,str2);
+    }
+    if(!sa_contains(s1, str3)){
         f++;
-    if(!sa_contains(s2, str1))
+        printf("\t\t%d %s\n", 1,str3);
+    }
+    if(!sa_contains(s2, str1)){
         f++;
-    if( sa_contains(s2, str2))
+        printf("\t\t%d %s\n", 2,str1);
+    }
+    if( sa_contains(s2, str2)){
         f++;
-    if(!sa_contains(s2, str3))
+        printf("\t\t%d %s\n", 2,str2);
+    }
+    if(!sa_contains(s2, str3)){
         f++;
-    if( sa_contains(s3, str1))
+        printf("\t\t%d %s\n", 2,str3);
+    }
+    if( sa_contains(s3, str1)){
         f++;
-    if( sa_contains(s3, str2))
+        printf("\t\t%d %s\n", 3,str1);
+    }
+    if( sa_contains(s3, str2)){
         f++;
-    if(!sa_contains(s3, str3))
+        printf("\t\t%d %s\n", 3,str2);
+    }
+    if(!sa_contains(s3, str3)){
         f++;
+        printf("\t\t%d %s\n", 3,str3);
+    }
     
     printf("\t\t%d\n", f);
-    
-    if(f)
-        goto fail;
     
     sa_free(s1);
     sa_free(s2);
     sa_free(s3);
+    
+    if(f)
+        goto fail;
+    
     
     END(EXIT_SUCCESS)
     

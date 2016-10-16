@@ -29,12 +29,13 @@ void radix_sort_test()
     BEGIN ("radix_sort_test")
             
     int failed = 0;
+    int i;
             
     char *str1[5] = {
-        "abcd",
-        "bcd",
-        "cd",
-        "d",
+        "dcba",
+        "cba",
+        "ba",
+        "a",
         ""
     };
     
@@ -42,15 +43,21 @@ void radix_sort_test()
     
     if(strcmp(str1[0], "") != 0){
         failed = 1;
-    }if(strcmp(str1[1], "abcd") != 0){
+    }if(strcmp(str1[1], "a") != 0){
         failed = 1;
-    }if(strcmp(str1[2], "bcd") != 0){
+    }if(strcmp(str1[2], "ba") != 0){
         failed = 1;
-    }if(strcmp(str1[3], "cd") != 0){
+    }if(strcmp(str1[3], "cba") != 0){
         failed = 1;
-    }if(strcmp(str1[4], "d") != 0){
+    }if(strcmp(str1[4], "dcba") != 0){
         failed = 1;
     }
+    
+    printf("\t\t---\n");
+    for(i = 0; i < 5; i++){
+        printf("\t\t%s\n",str1[i]);
+    }
+    printf("\t\t---\n");
     
     char *str2[5] = {
         "aaaa",
@@ -74,7 +81,17 @@ void radix_sort_test()
         failed = 1;
     }
     
-    END(failed ? EXIT_FAILURE : EXIT_SUCCESS)
+    printf("\t\t---\n");
+    for(i = 0; i < 5; i++){
+        printf("\t\t%s\n",str2[i]);
+    }
+    printf("\t\t---\n");
+    
+    printf("\t\t%d\n", failed);
+    if(failed)
+        END (EXIT_FAILURE)
+    else
+        END (EXIT_SUCCESS)
 }
 
 /* tries to check for memory leaks, I suppose.

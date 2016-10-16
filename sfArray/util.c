@@ -7,71 +7,53 @@
 
 typedef unsigned int u32;
 
-/* return: how many strings added to sort_to
- */
-char **rdxsrt(
-        char **unsorted, u32 len,
-        char **sort_to, u32 char_index)
+void rdxsrt(char **unsorted, u32 len, u32 char_index)
 {
-    char *sorted[len];
     u32 char_count[128] = {0}; // number of times ascii char c occurs in the strings
     u32 sumtbl[128]; // start index of strings, sum table of char_count
     u32 index[128]; // copy of sumtbl that is incremented
     u32 i;
     
-    // create char_count
-    for(i = 0; i < len; i++){
-        char *str = unsorted[i];
-        char c = str[char_index];
-        char_count[c]++;
-    }
+    for(i = 0; i < len; i++)
+        char_count[unsorted[i][char_index]]++;
     
-    // create sumtbl
     sumtbl[0] = 0;
-    index[0] = 0;
-    for(i = 1; i < 128; i++){
-        u32 val = sumtbl[i-1] + char_count[i-1];
-        sumtbl[i] = val;
-        index[i] = val;
-    }
+    for(i = 1; i < 128; i++)
+        sumtbl[i] = sumtbl[i-1] + char_count[i-1];
+    memcpy(index, sumtbl, 128 * sizeof(u32));
     
-    // fill sorted
+    char *sorted[len];
     for(i = 0; i < len; i++){ 
         char *str = unsorted[i];
-        char c = str[char_index];
-
-        if(c == '\0'){
-            sort_to[0] = str;
-            sort_to += sizeof(char *); 
-        }else{
-            u32 strindex = index[c];
-            sorted[strindex] = str;
-            index[c]++;
-        }
+        sorted[index[str[char_index]]++] = str;
     }
+    memcpy(unsorted, sorted, len);
     
-    // sort the sorted based on the next index
     char_index++;
-    for(i = 1; i < 128; i++){
-        if(char_count[i] == 0)
-            continue;
-        
-        sort_to = rdxsrt(   &sorted[sumtbl[i]], char_count[i],
-                            sort_to, char_index);
-    }
+    for(i = 1; i < 128; i++)
+        //if(char_count[i] > 0)
+            rdxsrt(&unsorted[sumtbl[i]], char_count[i], char_index);
+}
+
+void reverse(char **strings, unsigned int len){
+    if(len == 0)
+        return;
     
-    return sort_to;
+    unsigned int l, r;
+    for(l = 0, r = len-1; l < r; l++, r--){
+        char *swp = strings[l];
+        strings[l] = strings[r];
+        strings[r] = swp;
+    }
 }
 
 /* sort the string array based on MSD radix sort
  * 
  * O(n*l), l is the length of the longest string
  */
-void radix_sort(char **strings, unsigned int len)
+inline void radix_sort(char **strings, unsigned int len)
 {
-    char *sorted[len];
-    rdxsrt(strings, len, sorted, 0);
-    memcpy(strings, sorted, len);
+    rdxsrt(strings, len, 0);
 }
 
 

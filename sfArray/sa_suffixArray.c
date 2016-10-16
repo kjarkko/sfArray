@@ -2,14 +2,7 @@
 #include <string.h>
 #include "sa_suffixArray.h"
 #include "util.h"
-
-
-typedef struct {
-    char *src_str;
-    int *lcp;
-    char **suffixes;
-    unsigned int nsuffix;
-} sfarr;
+#include "def.h"
 
 
 /* length of the longest prefix that occurs in both strings
@@ -52,27 +45,23 @@ int *create_lcpA(char **suffixes, unsigned int len)
 sa_suf_arr *sa_new(const char *src) 
 {
     sfarr *new = malloc(sizeof (sfarr));
-
-    new->src_str = strdup(src);
+    char *string = strdup(src);
     
-    // create a vector containing all the suffixes
-    str_arr *substrings = str_arr_new();
-    unsigned int len = strlen(src);
-    unsigned int i = 0;
-    while(i < len){
-        str_arr_add(substrings, &new->src_str[len]);
-        i++;
+    u32 len = strlen(string) + 1; //null terminator included
+    u32 i;
+    char **suffixes = malloc(sizeof(char *) * len);
+    for(i = 0; i < len; i++){
+        suffixes[i] = &string[i];
     }
     
-    // sort the suffixes
-    char **arr = get_array(substrings);
-    radix_sort(arr, str_arr_size(substrings));
+    //radix_sort(suffixes, len);
+    qsort(suffixes, len, sizeof(char *), strcmp);
+    new->nsuffix = len;
+    new->src_str = string;
+    new->lcp = create_lcpA(suffixes, len);
+    new->suffixes = suffixes;
     
-    new->lcp = create_lcpA(arr, len);
-    new->suffixes = arr;
-    new->nsuffix = len+1; // off by one? 
 
-    str_arr_free(substrings);
     return (sa_suf_arr *) new;
 }
 
@@ -87,7 +76,7 @@ int locate(char **suffixes, size_t nsuffix, const char *find)
 {
     unsigned int len = strlen(find);
     int min = 0;
-    int max = nsuffix;
+    int max = nsuffix-1;
     int mid;
     
     while(min <= max){
@@ -95,7 +84,7 @@ int locate(char **suffixes, size_t nsuffix, const char *find)
         int cmp = strncmp(suffixes[mid], find, len);
         if(cmp == 0)
             return mid;
-        else if(cmp > 0){
+        else if(cmp < 0){
             min = mid + 1;
         }else{
             max = mid - 1;

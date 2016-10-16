@@ -12,7 +12,20 @@
 extern "C" {
 #endif
 
+typedef struct {
+    char *src_str;
+    int *lcp;
+    char **suffixes;
+    unsigned int nsuffix;
+} sfarr;
 
+typedef struct {
+    char **arr;
+    unsigned int size;
+    unsigned int length;
+} str_arr_st;
+
+typedef unsigned int u32;
 
 
 #ifdef	__cplusplus
