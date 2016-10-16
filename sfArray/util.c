@@ -31,7 +31,7 @@ void rdxsrt(char **unsorted, u32 len, u32 char_index)
     
     char_index++;
     for(i = 1; i < 128; i++)
-        //if(char_count[i] > 0)
+        if(char_count[i] > 0)
             rdxsrt(&unsorted[sumtbl[i]], char_count[i], char_index);
 }
 
