@@ -39,13 +39,14 @@ int sa_locate(sa_suf_arr *sa, const char *find)
 {
     sfarr *s = (sfarr *)sa;
     unsigned int len = strlen(find);
+    char **strings = s->suffixes;
     int min = 0;
     int max = s->nsuffix-1;
     int mid;
     
     while(min <= max){
         mid = (min + max) >> 1;
-        int cmp = strncmp(s->suffixes[mid], find, len);
+        int cmp = strncmp(strings[mid], find, len);
         if(cmp == 0)
             return mid;
         else if(cmp < 0){

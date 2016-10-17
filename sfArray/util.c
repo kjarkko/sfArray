@@ -14,7 +14,7 @@ void rdxsrt(char **unsorted, u32 len, u32 char_index)
     u32 index[128]; // copy of sumtbl that is incremented
     u32 i;
     
-    for(i = 0; i < len; i++)
+    for(i = 0; i < len; i++) // fill char_count
         char_count[unsorted[i][char_index]]++;
     
     sumtbl[0] = 0;
@@ -27,7 +27,7 @@ void rdxsrt(char **unsorted, u32 len, u32 char_index)
         char *str = unsorted[i];
         sorted[index[str[char_index]]++] = str;
     }
-    memcpy(unsorted, sorted, len);
+    memcpy(unsorted, sorted, len * sizeof(char *));
     
     char_index++;
     for(i = 1; i < 128; i++)

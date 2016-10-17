@@ -38,6 +38,10 @@ int *create_lcpA(char **suffixes, unsigned int len)
     return lcpa;
 }
 
+int cmpstr(void const *a, void const *b) { 
+    return strcmp(* (char * const *)a, * (char * const *)b); // what the fuck
+}
+
 /* creates a new suffix array based on the string src
  * 
  * O(l^2), where l is the length of the str
@@ -54,8 +58,8 @@ sa_suf_arr *sa_new(const char *src)
         suffixes[i] = &string[i];
     }
     
-    //radix_sort(suffixes, len);
-    qsort(suffixes, len, sizeof(char *), strcmp);
+    radix_sort(suffixes, len);
+    //qsort(suffixes, len, sizeof(char *), cmpstr);
     new->nsuffix = len;
     new->src_str = string;
     new->lcp = create_lcpA(suffixes, len);

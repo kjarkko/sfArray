@@ -16,6 +16,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>main.c</itemPath>
       <itemPath>sa_stringutils.c</itemPath>
       <itemPath>sa_suffixArray.c</itemPath>
       <itemPath>util.c</itemPath>
@@ -119,6 +120,8 @@
           <output>${TESTDIR}/TestFiles/f3</output>
         </linkerTool>
       </folder>
+      <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="sa_stringutils.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="sa_stringutils.h" ex="false" tool="3" flavor2="0">
@@ -213,6 +216,8 @@
           <output>${TESTDIR}/TestFiles/f3</output>
         </linkerTool>
       </folder>
+      <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="sa_stringutils.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="sa_stringutils.h" ex="false" tool="3" flavor2="0">

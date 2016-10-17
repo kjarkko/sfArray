@@ -25,7 +25,7 @@ typedef struct {
     unsigned int length;
 } str_arr_st;
 
-typedef unsigned int u32;
+typedef u_int32_t u32;
 
 
 #ifdef	__cplusplus
