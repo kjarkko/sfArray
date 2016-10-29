@@ -27,7 +27,7 @@ inline unsigned int longest_equ_prefix_len(const char *str1, const char *str2)
 int *create_lcpA(char **suffixes, unsigned int len)
 {
     int *lcpa = malloc(len * sizeof(int));
-    lcpa[0] = 0; // ????
+    lcpa[0] = 0;
     
     unsigned int i = 1;
     while(i < len){
@@ -44,7 +44,6 @@ int cmpstr(void const *a, void const *b) {
 
 /* creates a new suffix array based on the string src
  * 
- * O(l^2), where l is the length of the str
  */
 sa_suf_arr *sa_new(const char *src) 
 {

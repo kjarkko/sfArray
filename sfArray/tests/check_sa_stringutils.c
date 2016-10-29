@@ -151,21 +151,89 @@ void sa_locate_test()
     END (EXIT_FAILURE)
 }
 
+void char_dist_test()
+{
+    BEGIN ("char_dist_test")
+    
+    char *str = "abcdefgh";
+    size_t dist;
+    
+    dist = char_dist(&str[0], &str[1]);
+    if(dist != 1)
+        goto fail;
+    dist = char_dist(&str[0], &str[0]);
+    if(dist != 0)
+        goto fail;
+    dist = char_dist(&str[1], &str[0]);
+    if(dist != 1)
+        goto fail;
+    dist = char_dist(&str[2], &str[5]);
+    if(dist != 3)
+        goto fail;
+    
+    END (EXIT_SUCCESS)
+    
+    fail:END (EXIT_FAILURE)
+}
+
 void sa_longest_recurring_test()
 {
     BEGIN ("sa_longest_recurring_test")
+            
+    sa_suf_arr *s1 = sa_new("aabbbaabbb");
+    char *str1 = sa_longest_recurring(s1);
+    int cmp = strcmp(str1, "aabbb");
+    free(str1);
+    sa_free(s1);
+    if(cmp != 0)
+        goto fail;
     
-    printf("\t\ttest not implemented yet.\n");
+    sa_suf_arr *s2 = sa_new("aba");
+    char *str2 = sa_longest_recurring(s2);
+    cmp = strcmp(str2, "a");
+    free(str2);
+    sa_free(s2);
+    if(cmp != 0)
+        goto fail;
     
-    END (EXIT_FAILURE)
+    sa_suf_arr *s3 = sa_new("aaaa");
+    char *str3 = sa_longest_recurring(s3);
+    cmp = strcmp(str3, "aa");
+    sa_free(s3);
+    free(str3);
+    if(cmp != 0)
+        goto fail;
+    
+    sa_suf_arr *s4 = sa_new("abc");
+    char *str4 = sa_longest_recurring(s4);
+    cmp = strcmp(str4, "");
+    sa_free(s4);
+    free(str4);
+    if(cmp != 0)
+        goto fail;
+    
+    END (EXIT_SUCCESS)
+    fail:END (EXIT_FAILURE)
 }
 
 void sa_count_occurrences_test()
 {
-    BEGIN ("sa_longest_recurring_test")
+    BEGIN ("sa_count_occurrences_test")
     
-    printf("\t\ttest not implemented yet.\n");
+    sa_suf_arr *s = sa_new("abcdab"); 
+    if(sa_count_occurrences(s, "a") != 2)
+        goto fail;
+    if(sa_count_occurrences(s, "ab") != 2)
+        goto fail;
+    if(sa_count_occurrences(s, "c") != 1)
+        goto fail;
+    if(sa_count_occurrences(s, "d") != 0)
+        goto fail;
+    sa_free(s);
     
+    END (EXIT_SUCCESS)
+    
+    fail:sa_free(s);
     END (EXIT_FAILURE)
 }
 
@@ -206,6 +274,9 @@ int main(int argc, char** argv)
     sa_strcmp_test();
     sa_contains_test();
     sa_locate_test();
+    char_dist_test();
+    sa_longest_recurring_test();
+    sa_count_occurrences_test();
     sa_longest_common_test();
     sa_longest_repeated_test();
     sa_longest_palindrome_test();

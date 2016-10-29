@@ -31,6 +31,13 @@ void new_and_free_test()
     while(a++ < 1000)
         sa_free(sa_new(""));
     
+    char *str = malloc(15000 * sizeof(char));
+    memset(str, 'a', 14999 * sizeof(char));
+    str[1499] = '\0';
+    sa_suf_arr *sarr = sa_new(str);
+    free(sarr);
+    free(str);
+    
     sfarr *s = (sfarr *)sa_new("dcba");
     
     unsigned int i;

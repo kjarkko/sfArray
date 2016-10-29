@@ -4,17 +4,17 @@
 #include <limits.h>
 #include <unistd.h>
 #include "util.h"
+#include "def.h"
 
-typedef unsigned int u32;
 
 void rdxsrt(char **unsorted, u32 len, u32 char_index)
 {
-    u32 char_count[128] = {0}; // number of times ascii char c occurs in the strings
-    u32 sumtbl[128]; // start index of strings, sum table of char_count
-    u32 index[128]; // copy of sumtbl that is incremented
+    u32 char_count[128] = {0};
+    u32 sumtbl[128];
+    u32 index[128]; 
     u32 i;
     
-    for(i = 0; i < len; i++) // fill char_count
+    for(i = 0; i < len; i++)
         char_count[unsorted[i][char_index]]++;
     
     sumtbl[0] = 0;
@@ -35,18 +35,6 @@ void rdxsrt(char **unsorted, u32 len, u32 char_index)
             rdxsrt(&unsorted[sumtbl[i]], char_count[i], char_index);
 }
 
-void reverse(char **strings, unsigned int len){
-    if(len == 0)
-        return;
-    
-    unsigned int l, r;
-    for(l = 0, r = len-1; l < r; l++, r--){
-        char *swp = strings[l];
-        strings[l] = strings[r];
-        strings[r] = swp;
-    }
-}
-
 /* sort the string array based on MSD radix sort
  * 
  * O(n*l), l is the length of the longest string
@@ -59,11 +47,6 @@ inline void radix_sort(char **strings, unsigned int len)
 
 /*---vector---*/
 
-typedef struct {
-    char **arr;
-    unsigned int size;
-    unsigned int length;
-} str_arr_st;
 
 
 /* Allocates a new vector.

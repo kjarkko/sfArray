@@ -31,6 +31,25 @@ int sa_contains(sa_suf_arr *sa, const char *str)
     return sa_locate(sa, str) != -1;
 }
 
+int contains_str(const char *full, const char *sub){
+    size_t i = 0;
+    while(1){
+        char f = full[i];
+        char s = sub[i];
+        
+        if(s == '\0')
+            return 0;
+        
+        if(f == '\0')
+            return -s;
+        
+        if(f != s)
+            return f - s;
+        
+        i++;
+    }
+}
+
 /* returns the index of the given string, -1 if not found
  * 
  * O(l log n) 
@@ -46,7 +65,8 @@ int sa_locate(sa_suf_arr *sa, const char *find)
     
     while(min <= max){
         mid = (min + max) >> 1;
-        int cmp = strncmp(strings[mid], find, len);
+        //int cmp = strncmp(strings[mid], find, len);
+        int cmp = contains_str(strings[mid],find);
         if(cmp == 0)
             return mid;
         else if(cmp < 0){
@@ -59,6 +79,12 @@ int sa_locate(sa_suf_arr *sa, const char *find)
     return -1;
 }
 
+inline size_t char_dist(const char *a, const char *b)
+{
+    size_t diff = (a < b) ? (b - a) : (a - b);
+    return diff / sizeof(char);
+}
+
 /* the longest substring that occurs more than once
  * returns a duplicated string.
  * if multiple substrings with similar length are present, the first one found
@@ -68,43 +94,48 @@ int sa_locate(sa_suf_arr *sa, const char *find)
 char *sa_longest_recurring(sa_suf_arr *sa)
 {
     sfarr *s = (sfarr *)sa;
-    unsigned int longest = 0;
-    unsigned int location = 0;
+    u32 longest = 0;
+    u32 location = 0;
     
-    unsigned int i = 0;
-    while(i < s->nsuffix){
+    u32 i;
+    for(i = 1; i < s->nsuffix; i++){
         if(s->lcp[i] > longest){
-            longest = s->lcp[i];
-            location = i;
+            char *start1 = s->suffixes[i];
+            char *start2 = s->suffixes[i-1];
+            size_t dist = char_dist(start1, start2);
+            if(dist >= longest){
+                longest = dist;
+                location = i;
+            }
         }
-        i++;
     }
     
     return strndup(s->suffixes[location], longest);
 }
 
-unsigned int sa_count_occurrances(sa_suf_arr *sa, const char *str)
+unsigned int sa_count_occurrences(sa_suf_arr *sa, const char *str)
 {
     sfarr *s = (sfarr *)sa;
-    int i = sa_locate(sa, str);
+    u32 i = sa_locate(sa, str);
+    u32 slen = strlen(str);
     if(i == -1)
         return 0;
     
-    unsigned int len = sa_lcpa_len(sa);
-    unsigned int count = 1;
+    u32 len = s->nsuffix;
+    u32 count = 1;
     { // left
-        unsigned int lcpi = i;
+        u32 lcpi = i;
         while(lcpi-- > 0){
-            if(s->lcp[lcpi] >= len)
+            if(s->lcp[lcpi] >= slen)
                 count++;
             else break;
         }
     };
     
     { // right
-        unsigned int lcpi = i;
-        while(lcpi < s->nsuffix){ // off by one
-            if(s->lcp[lcpi] >= len)
+        u32 lcpi = i;
+        while(lcpi < len){
+            if(s->lcp[lcpi] >= slen)
                 count++;
             else break;
             lcpi++;
