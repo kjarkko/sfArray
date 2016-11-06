@@ -9,8 +9,11 @@ For creating and freeing suffix arrays, include the header "sa_suffixArray.h" an
 Notable functions include (all functions have the prefix 'sa_'): new, free, contains, longest_recurring, count_occurrances
 
 example - does the string "mississippi" contain "sip":
+
 sa_suf_arr *sa = sa_new("mississippi");
+
 int contains = sa_contains(sa, "sip");
+
 sa_free(sa);
 
 #### Sources 

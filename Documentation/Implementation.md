@@ -14,4 +14,5 @@ The main issue with the project at the moment is that the algorithm that constru
 
 #### Sources
 https://www.cs.umd.edu/class/fall2011/cmsc858s/SuffixArrays.pdf
+
 I have used various other sources including wikipedia but the one above is the main one. (Also I cannot remember the rest.)
