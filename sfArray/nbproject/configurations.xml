@@ -25,6 +25,12 @@
                    displayName="Test Files"
                    projectFiles="false"
                    kind="TEST_LOGICAL_FOLDER">
+      <logicalFolder name="f4"
+                     displayName="performane_tests"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/perftest.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="f3"
                      displayName="Stringutils_test"
                      projectFiles="true"
@@ -119,13 +125,37 @@
           <output>${TESTDIR}/TestFiles/f3</output>
         </linkerTool>
       </folder>
-      <item path="main.c" ex="false" tool="0" flavor2="0">
+      <folder path="TestFiles/f4">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+        </linkerTool>
+      </folder>
+      <item path="main.c" ex="false" tool="0" flavor2="9">
+        <cTool>
+          <developmentMode>1</developmentMode>
+          <architecture>0</architecture>
+          <commandlineTool>gcc</commandlineTool>
+          <warningLevel>2</warningLevel>
+        </cTool>
       </item>
       <item path="sa_stringutils.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="sa_stringutils.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="sa_suffixArray.c" ex="false" tool="0" flavor2="0">
+        <cTool>
+          <commandlineTool>gcc</commandlineTool>
+        </cTool>
       </item>
       <item path="sa_suffixArray.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -134,6 +164,8 @@
       <item path="tests/check_sa_suffixArray.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/check_util.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/perftest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="util.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -215,6 +247,21 @@
           <output>${TESTDIR}/TestFiles/f3</output>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+        </linkerTool>
+      </folder>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="sa_stringutils.c" ex="false" tool="0" flavor2="0">
@@ -230,6 +277,8 @@
       <item path="tests/check_sa_suffixArray.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/check_util.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/perftest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="util.c" ex="false" tool="0" flavor2="0">
       </item>

@@ -237,33 +237,6 @@ void sa_count_occurrences_test()
     END (EXIT_FAILURE)
 }
 
-void sa_longest_common_test()
-{
-    BEGIN ("sa_longest_common_test")
-    
-    printf("\t\ttest not implemented yet.\n");
-    
-    END (EXIT_FAILURE)
-}
-
-void sa_longest_repeated_test()
-{
-    BEGIN ("sa_longest_repeated_test")
-    
-    printf("\t\ttest not implemented yet.\n");
-    
-    END(EXIT_FAILURE)
-}
-
-void sa_longest_palindrome_test()
-{
-    BEGIN ("sa_longest_palindrome_test")
-    
-    printf("\t\ttest not implemented yet.\n");
-    
-    END (EXIT_FAILURE)
-}
-
 
 int main(int argc, char** argv) 
 {
@@ -277,10 +250,6 @@ int main(int argc, char** argv)
     char_dist_test();
     sa_longest_recurring_test();
     sa_count_occurrences_test();
-    sa_longest_common_test();
-    sa_longest_repeated_test();
-    sa_longest_palindrome_test();
-    
     printf("TESTS FINISHED: check_sa_stringutils, FAILURES: %d\n\n", failures);
     
     return (failures == 0) ? EXIT_SUCCESS : EXIT_FAILURE;

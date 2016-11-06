@@ -144,25 +144,3 @@ unsigned int sa_count_occurrences(sa_suf_arr *sa, const char *str)
     
     return count;
 }
-
-/* longest common substring
- */
-char *sa_longest_common(sa_suf_arr *sa1, sa_suf_arr *sa2)
-{
-    
-    return NULL;
-}
-
-/* longest substring that occurs twice or more
- */
-char *sa_longest_repeated(sa_suf_arr *sa1, sa_suf_arr *sa2)
-{
-    return NULL;
-}
-
-/* pointer to the longest palindrome within the string
- */
-char *sa_longest_palindrome(sa_suf_arr *sa1)
-{
-    return NULL;
-}

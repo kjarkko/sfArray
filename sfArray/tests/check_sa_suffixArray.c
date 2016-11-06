@@ -26,7 +26,6 @@ static int failures;
 void new_and_free_test()
 {
     BEGIN ("new_and_free_test")
-    printf("\t\thow do i valgrind\n");
     int a = 0;
     while(a++ < 1000)
         sa_free(sa_new(""));
