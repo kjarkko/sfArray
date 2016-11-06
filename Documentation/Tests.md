@@ -1,7 +1,7 @@
 
 #### Performance tests
 
-testing the algorithms inside the stringutils file is not really feasible since they are all O(n log n) or lower, meaning that in order to get any meningful performance data out of them the array construction algorithm would have to work for way too long.
+testing the algorithms inside the stringutils file is not really feasible since they are all O(n log n) or lower, meaning that in order to get any meningful performance data out of them the array construction algorithm would have to work for way too long (see implementation.md - shortcomings).
 
 Suffix array construction
 - single character ('a'^n) string:
