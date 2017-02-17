@@ -1,3 +1,5 @@
+#### OUT OF DATE
+
 #### A suffix array library for C.
 
 The library will mainly consist of two parts, the suffixArray file that builds the data structure and the stringutils file which is meant for all the operations that are related to the suffix array.

@@ -1,3 +1,5 @@
+#### OUT OF DATE
+
 #### Program structure
 - sa_suffixArray: construction and deletion algorithms
 - sa_stringutils: all the algorithms that utilize suffix arrays in some way
